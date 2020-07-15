@@ -31,6 +31,14 @@
 				text-align: center;
 			}
 
+			.container img {
+				position: fixed;
+				right: 0.625rem;
+				bottom: 0.625rem;
+				width: 25vmin;
+				height: 25vmin;
+			}
+
 			.cog-wheel1,
 			.cog-wheel2 {
 				transform: scale(0.7);
@@ -152,60 +160,69 @@
 				color: #092532;
 				animation: blink 2s infinite linear;
 			}
-			
-			@-webkit-keyframes rotate{
+
+			@-webkit-keyframes rotate {
 				0% {
-				    transform: rotate(0deg);
+					transform: rotate(0deg);
 				}
+
 				50% {
-				    transform: rotate(180deg);
+					transform: rotate(180deg);
 				}
+
 				100% {
-				    transform: rotate(360deg);
+					transform: rotate(360deg);
 				}
 			}
-			
-			@keyframes rotate{
+
+			@keyframes rotate {
 				0% {
-				    transform: rotate(0deg);
+					transform: rotate(0deg);
 				}
+
 				50% {
-				    transform: rotate(180deg);
+					transform: rotate(180deg);
 				}
+
 				100% {
-				    transform: rotate(360deg);
+					transform: rotate(360deg);
 				}
 			}
-			
-			@-webkit-keyframes blink{
+
+			@-webkit-keyframes blink {
 				0% {
-				    opacity: 0;
+					opacity: 0;
 				}
+
 				50% {
-				     opacity: 1;
-					 color: red;
+					opacity: 1;
+					color: red;
 				}
+
 				100% {
-				     opacity: 0;
+					opacity: 0;
 				}
 			}
-			
-			@keyframes blink{
+
+			@keyframes blink {
 				0% {
-				    opacity: 0;
+					opacity: 0;
 				}
+
 				50% {
-				     opacity: 1;
-					 color: red;
+					opacity: 1;
+					color: red;
 				}
+
 				100% {
-				     opacity: 0;
+					opacity: 0;
 				}
 			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
+			<img src="img/weChat.jpg" alt="文件找不到" />
 			<h1 class="first-four">4</h1>
 			<div class="cog-wheel1">
 				<div class="cog1">
