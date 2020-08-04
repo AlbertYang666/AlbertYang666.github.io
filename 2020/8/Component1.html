@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>组合模式实例应用：公众号AlbertYang</title>
+	</head>
+	<body>
+		<input  type="button" value="存储" onclick="a()" />
+		<input  type="button" value="取出" onclick="b()" />
+	</body>
+	<script type="text/javascript">
+		//存储的值  
+		var value_content = {};
+
+		function setCookie(name, value) {
+			value_content[name] = value;
+		}
+
+		function getCookie(name) {
+			return value_content[name];
+		}
+		//表单组合对象
+		var CompositeForm = function(id, method, action) {
+			this.formComponents = [];
+
+			this.element = document.createElement('form');
+			this.element.id = id;
+			this.element.method = method || 'POST';
+			this.element.action = action || '#';
+		}
+
+		CompositeForm.prototype.add = function(child) {
+			this.formComponents.push(child);
+			this.element.appendChild(child.getElement());
+		}
+		CompositeForm.prototype.remove = function(child) {
+			for (var i = 0, len = this.formComponents.length; i < len; i++) {
+				if (child == this.formComponents[i]) {
+					this.formComponents.splice(i, 1);
+					break;
+				}
+			}
+		}
+		CompositeForm.prototype.getChild = function(i) {
+			return this.formComponents[i];
+		}
+
+		CompositeForm.prototype.save = function() {
+			for (var i = 0, len = this.formComponents.length; i < len; i++) {
+				this.formComponents[i].save();
+			}
+		}
+		CompositeForm.prototype.restore = function() {
+			for (var i = 0, len = this.formComponents.length; i < len; i++) {
+				this.formComponents[i].restore();
+			}
+		}
+		CompositeForm.prototype.getElement = function() {
+			return this.element;
+		}
+		//接口方法
+		var Field = function(id) {
+			this.id = id;
+			this.element;
+			this.content;
+		};
+		Field.prototype.add = function() {};
+		Field.prototype.remove = function() {};
+		Field.prototype.getChild = function() {};
+
+		Field.prototype.save = function() {
+			setCookie(this.id, this.getValue());
+		};
+		Field.prototype.getElement = function() {
+			return this.element;
+		}
+		Field.prototype.getValue = function() {
+			throw new Error('错误');
+		}
+		Field.prototype.restore = function() {
+			this.content.value = getCookie(this.id);
+		};
+		//继承方法
+		function extend(subClass, superClass) {
+			var F = function() {};
+			F.prototype = superClass.prototype;
+			subClass.prototype = new F();
+			subClass.prototype.constructor = subClass;
+
+			subClass.superclass = superClass.prototype;
+			if (superClass.prototype.constructor == Object.prototype.constructor) {
+				superClass.prototype.constructor = superClass;
+			}
+		}
+		//输入框
+		var InputField = function(id, label) {
+			Field.call(this, id);
+
+			this.input = document.createElement('input');
+			this.content = this.input;
+
+			this.label = document.createElement('label');
+			var labelTextNode = document.createTextNode(label);
+			this.label.appendChild(labelTextNode);
+
+			this.element = document.createElement('div');
+			this.element.id = id;
+			this.element.className = 'input-field';
+			this.element.appendChild(this.label);
+			this.element.appendChild(this.input);
+		}
+		extend(InputField, Field);
+		InputField.prototype.getValue = function() {
+			return this.input.value;
+		};
+		//文本框
+		var TextareaField = function(id, label) {
+			Field.call(this, id);
+
+			this.textarea = document.createElement('textarea');
+			this.content = this.textarea;
+
+			this.label = document.createElement('label');
+			var labelTextNode = document.createTextNode(label);
+			this.label.appendChild(labelTextNode);
+
+			this.element = document.createElement('div');
+			this.element.id = id;
+			this.element.className = 'input-field';
+			this.element.appendChild(this.label);
+			this.element.appendChild(this.textarea);
+		};
+		extend(TextareaField, Field);
+		TextareaField.prototype.getValue = function() {
+			return this.textarea.value;
+		};
+		//选择框
+		var SelectField = function(id, label) {
+			Field.call(this, id);
+
+			this.select = document.createElement('select');
+			this.select.options.add(new Option("sfs", "sfs"));
+			this.select.options.add(new Option("111", "2222222222")); //这边value会改变
+			this.content = this.select;
+
+			this.label = document.createElement('label');
+			var labelTextNode = document.createTextNode(label);
+			this.label.appendChild(labelTextNode);
+
+			this.element = document.createElement('div');
+			this.element.id = id;
+			this.element.className = 'input-field';
+			this.element.appendChild(this.label);
+			this.element.appendChild(this.select);
+		};
+		extend(SelectField, Field);
+		SelectField.prototype.getValue = function() {
+			return this.select.options[this.select.options.selectedIndex].value;
+		};
+		//表单域
+		var CompositeFieldset = function(id, legendText) {
+			this.components = {};
+
+			this.element = document.createElement('fieldset');
+			this.element.id = id;
+
+			if (legendText) {
+				this.legend = document.createElement('legend');
+				this.legend.appendChild(document.createTextNode(legendText));
+				this.element.appendChild(this.legend);
+			}
+		};
+
+		CompositeFieldset.prototype.add = function(child) {
+			this.components[child.getElement().id] = child;
+			this.element.appendChild(child.getElement());
+		};
+
+		CompositeFieldset.prototype.remove = function(child) {
+			delete this.components[child.getElement().id];
+		};
+
+		CompositeFieldset.prototype.getChild = function(id) {
+			if (this.components[id] != undefined) {
+				return this.components[id];
+			} else {
+				return null;
+			}
+		};
+
+		CompositeFieldset.prototype.save = function() {
+			for (var id in this.components) {
+				if (!this.components.hasOwnProperty(id))
+					continue;
+				this.components[id].save();
+			}
+		};
+
+		CompositeFieldset.prototype.restore = function() {
+			for (var id in this.components) {
+				if (!this.components.hasOwnProperty(id))
+					continue;
+				this.components[id].restore();
+			}
+		};
+
+		CompositeFieldset.prototype.getElement = function() {
+			return this.element;
+		};
+
+
+		//用组合模式汇合起来
+		var contactForm = new CompositeForm('contact-form', 'POST', 'test');
+
+		var nameFieldset = new CompositeFieldset('name-fieldset');
+		nameFieldset.add(new InputField('first-name', 'First Name'));
+		nameFieldset.add(new InputField('last-name', 'Last Name'));
+		contactForm.add(nameFieldset);
+
+		var addressFieldset = new CompositeFieldset('address-fieldset');
+		addressFieldset.add(new InputField('address', 'Address'));
+		addressFieldset.add(new InputField('city', 'City'));
+		addressFieldset.add(new SelectField('state', 'State'));
+		addressFieldset.add(new InputField('zip', 'Zip'));
+		contactForm.add(addressFieldset);
+
+		contactForm.add(new TextareaField('comments', 'Comments'));
+
+		document.body.appendChild(contactForm.getElement());
+
+		function a() {
+			contactForm.save();
+		}
+
+		function b() {
+			contactForm.restore();
+		}
+	</script>
+</html>

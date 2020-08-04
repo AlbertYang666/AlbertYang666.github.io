@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>组合模式实例应用：公众号AlbertYang</title>
+	</head>
+	<body>
+		<input value="隐藏" type="button" onclick="a()" />
+		<input value="显示" type="button" onclick="b()" />
+	</body>
+	<script type="text/javascript">
+		//图片库
+		var DynamicGallery = function(id) {
+			this.children = [];
+
+			this.element = document.createElement('div');
+			this.element.id = id;
+			this.element.className = 'dynamic-gallery';
+		};
+		DynamicGallery.prototype = {
+			add: function(child) {
+				this.children.push(child);
+				this.element.appendChild(child.getElement());
+			},
+			remove: function(child) {
+				for (var node, i = 0; node = this.getChild(i); i++) {
+					if (node == child) {
+						this.children.splice(i, 1);
+						break;
+					}
+				}
+				this.element.removeChild(chld.getElement());
+			},
+			getChild: function(i) {
+				return this.children[i];
+			},
+			hide: function() {
+				for (var i = 0, node; node = this.getChild(i); i++) {
+					node.hide();
+				}
+				this.element.style.display = 'none';
+			},
+			show: function() {
+				this.element.style.display = 'block';
+				for (var i = 0, node; node = this.getChild(i); i++) {
+					node.show();
+				}
+			},
+			getElement: function() {
+				return this.element;
+			}
+		};
+
+		//单个图片
+		var GalleryImage = function(src) {
+			this.element = document.createElement('img');
+			this.element.className = 'gallery-image';
+			this.element.src = src;
+		};
+		GalleryImage.prototype = {
+			add: function() {},
+			remove: function() {},
+			getChild: function() {},
+			hide: function() {
+				this.element.style.display = 'none';
+				console.log(999);
+			},
+			show: function() {
+				this.element.style.display = '';
+				console.log(888);
+			},
+			getElement: function() {
+				return this.element;
+			}
+		};
+		//汇合起来
+		var topGallery = new DynamicGallery('top-gallery');
+		topGallery.add(new GalleryImage('img/1.jpg'));
+		topGallery.add(new GalleryImage('img/2.jpg'));
+		topGallery.add(new GalleryImage('img/3.jpg'));
+
+		var vacationPhotos = new DynamicGallery('vacation-photos');
+		for (var p = 0; p < 30; p++) {
+			vacationPhotos.add(new GalleryImage('img/3.jpg'));
+		}
+		topGallery.add(vacationPhotos);
+		document.body.appendChild(topGallery.getElement());
+
+		function a() {
+			topGallery.hide();
+		}
+
+		function b() {
+			topGallery.show();
+		}
+	</script>
+</html>
