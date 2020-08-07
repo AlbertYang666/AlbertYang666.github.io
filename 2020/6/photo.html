@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>公众号AlbertYang：纯CSS实现照片墙</title>
+		<style>
+			/*
+      *纯CSS实现照片墙：
+      *公众号:AlbertYang
+      */
+			/* RESET */
+			* {
+				margin: 0;
+				padding: 0;
+			}
+ 
+			body {
+				font-family: Tahoma, Helvetica, "\5b8b\4f53", "Arial", sans-serif;
+				font-size: 12px;
+				color: #eeeeee;
+			}
+ 
+			.container {
+				width: 90%;
+				height: auto;
+				margin: 6.25rem auto;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+			}
+ 
+			.container .img-wrap {
+				padding: 10px;
+				margin: 10px;
+				background: white;
+				border: 1px solid #ddd;
+				width: 160px;
+				height: fit-content;
+				box-shadow: 2px 2px 3px rgba(50, 50, 50, 0.4);
+				-webkit-transition: all 0.5s ease-in;
+				-moz-transition: all 0.5s ease-in;
+				-ms-transition: all 0.5s ease-in;
+				-o-transition: all 0.5s ease-in;
+				transition: all 0.5s ease-in;
+				z-index: 1;
+				-webkit-filter: blur(1px);
+				-moz-filter: blur(1px);
+				-ms-filter: blur(1px);
+				-o-filter: blur(1px);
+				filter: blur(1px);
+			}
+ 
+			.container .img-wrap img {
+				max-width: 100%;
+				height: auto;
+			}
+ 
+			.container .img-wrap:after {
+				content: attr(data-title);
+				display: block;
+				text-align: center;
+				font-size: 15px;
+				color: #FCC688;
+			}
+ 
+			.container .img-wrap:nth-child(1n) {
+				transform: rotate(-5deg);
+				-webkit-transform: rotate(-5deg);
+			}
+ 
+			.container .img-wrap:nth-child(2n) {
+				transform: rotate(-20deg);
+				-webkit-transform: rotate(-20deg);
+			}
+ 
+			.container .img-wrap:nth-child(3n) {
+				transform: rotate(5deg);
+				-webkit-transform: rotate(5deg);
+			}
+ 
+			.container .img-wrap:nth-child(4n) {
+				transform: rotate(-10deg);
+				-webkit-transform: rotate(-10deg);
+			}
+ 
+			.container .img-wrap:nth-child(5n) {
+				transform: rotate(-30deg);
+				-webkit-transform: rotate(-30deg);
+			}
+ 
+			.container .img-wrap:nth-child(6n) {
+				transform: rotate(20deg);
+				-webkit-transform: rotate(20deg);
+			}
+ 
+			.container .img-wrap:nth-child(7n) {
+				transform: rotate(50deg);
+				-webkit-transform: rotate(50deg);
+			}
+ 
+			.container .img-wrap:nth-child(8n) {
+				transform: rotate(5deg);
+				-webkit-transform: rotate(5deg);
+			}
+ 
+			.container .img-wrap:nth-child(9n) {
+				transform: rotate(15deg);
+				-webkit-transform: rotate(15deg);
+			}
+ 
+			.container .img-wrap:nth-child(10n) {
+				transform: rotate(-15deg);
+				-webkit-transform: rotate(-15deg);
+			}
+ 
+			.container .img-wrap:nth-child(11n) {
+				transform: rotate(-25deg);
+				-webkit-transform: rotate(-25deg);
+			}
+ 
+			.container .img-wrap:hover {
+				box-shadow: 15px 15px 20px rgba(50, 50, 50, 0.4);
+				transform: rotate(0deg) scale(1.50);
+				-webkit-transform: rotate(0deg) scale(1.50);
+				z-index: 2;
+				position: relative;
+				-webkit-filter: blur(0px);
+				-moz-filter: blur(0px);
+				-ms-filter: blur(0px);
+				-o-filter: blur(0px);
+				filter: blur(0px);
+				cursor: pointer;
+			}
+ 
+			.container .img-wrap:active {
+				background: rgba(50, 50, 50, 0.3);
+				box-shadow: none;
+				border: none;
+				width: 100%;
+				height: 100%;
+				margin: auto;
+				text-align: center;
+				align-items: center;
+				transform: rotate(0deg) translate(-50%, -50%);
+				-webkit-transform: rotate(0deg) translate(-50%, -50%);
+				-webkit-filter: blur(0px);
+				-moz-filter: blur(0px);
+				-ms-filter: blur(0px);
+				-o-filter: blur(0px);
+				filter: blur(0px);
+				position: absolute;
+				z-index: 3;
+				left: 50%;
+				top: 50%;
+				cursor: zoom-in;
+			}
+ 
+			.container .img-wrap:active img {
+				align-items: center;
+				max-height: 600px;
+				margin-top: 10%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="img-wrap" data-title="照片1"><img src="http://dingyue.nosdn.127.net/3dI3RPSOI2eBbguqAvd3Tt8qeDZqVfBAIn2RRFktrpNe91512439810577.jpg"></div>
+			<div class="img-wrap" data-title="照片2"><img src="http://01.minipic.eastday.com/20170207/20170207145729_d643e7de3fcaf066fe54e19b3293e074_4.jpeg"></div>
+			<div class="img-wrap" data-title="照片3"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=335766965,268232045&fm=26&gp=0.jpg"></div>
+			<div class="img-wrap" data-title="照片4"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1119298312,2521482562&fm=26&gp=0.jpg"></div>
+			<div class="img-wrap" data-title="照片5"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1592929071799&di=41e3159489c46603fbcc0525675ad915&imgtype=0&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D3956123290%2C3155232422%26fm%3D214%26gp%3D0.jpg"></div>
+			<div class="img-wrap" data-title="照片6"><img src="http://dingyue.nosdn.127.net/3dI3RPSOI2eBbguqAvd3Tt8qeDZqVfBAIn2RRFktrpNe91512439810577.jpg"></div>
+			<div class="img-wrap" data-title="照片7"><img src="http://01.minipic.eastday.com/20170207/20170207145729_d643e7de3fcaf066fe54e19b3293e074_4.jpeg"></div>
+			<div class="img-wrap" data-title="照片8"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=335766965,268232045&fm=26&gp=0.jpg"></div>
+			<div class="img-wrap" data-title="照片9"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1119298312,2521482562&fm=26&gp=0.jpg"></div>
+			<div class="img-wrap" data-title="照片10"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1592929071799&di=41e3159489c46603fbcc0525675ad915&imgtype=0&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D3956123290%2C3155232422%26fm%3D214%26gp%3D0.jpg"></div>
+			<div class="img-wrap" data-title="照片1"><img src="http://dingyue.nosdn.127.net/3dI3RPSOI2eBbguqAvd3Tt8qeDZqVfBAIn2RRFktrpNe91512439810577.jpg"></div>
+			<div class="img-wrap" data-title="照片2"><img src="http://01.minipic.eastday.com/20170207/20170207145729_d643e7de3fcaf066fe54e19b3293e074_4.jpeg"></div>
+			<div class="img-wrap" data-title="照片3"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=335766965,268232045&fm=26&gp=0.jpg"></div>
+			<div class="img-wrap" data-title="照片4"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1119298312,2521482562&fm=26&gp=0.jpg"></div>
+			<div class="img-wrap" data-title="照片5"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1592929071799&di=41e3159489c46603fbcc0525675ad915&imgtype=0&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D3956123290%2C3155232422%26fm%3D214%26gp%3D0.jpg"></div>
+			<div class="img-wrap" data-title="照片6"><img src="http://dingyue.nosdn.127.net/3dI3RPSOI2eBbguqAvd3Tt8qeDZqVfBAIn2RRFktrpNe91512439810577.jpg"></div>
+			<div class="img-wrap" data-title="照片7"><img src="http://01.minipic.eastday.com/20170207/20170207145729_d643e7de3fcaf066fe54e19b3293e074_4.jpeg"></div>
+			<div class="img-wrap" data-title="照片8"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=335766965,268232045&fm=26&gp=0.jpg"></div>
+			<div class="img-wrap" data-title="照片9"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1119298312,2521482562&fm=26&gp=0.jpg"></div>
+			<div class="img-wrap" data-title="照片10"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1592929071799&di=41e3159489c46603fbcc0525675ad915&imgtype=0&src=http%3A%2F%2Fimg0.imgtn.bdimg.com%2Fit%2Fu%3D3956123290%2C3155232422%26fm%3D214%26gp%3D0.jpg"></div>
+		</div>
+	</body>
+</html>
