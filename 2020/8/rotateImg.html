@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>图片旋转：公众号AlbertYang</title>
+	</head>
+	<style type="text/css">
+		#content {
+			width: 800px;
+			height: auto;
+			margin: auto;
+		}
+
+		img {
+			width: 100%;
+		}
+
+		input {
+			width: 150px;
+			height: 30px;
+		}
+
+		button {
+			width: 60px;
+			height: 30px;
+			cursor: pointer;
+		}
+
+		.canvasbox canvas {
+			width: 100%
+		}
+	</style>
+
+	<body>
+		<div id="content">
+			<div class="imgbox"><img id="img" src="./img/image_20200813.jpg"></div>
+			<div>
+				<input type="number" id="number" name="" placeholder="输入旋转角度">
+				<button onclick="drawImg()">draw</button>
+			</div>
+			<div class="canvasbox" width="800px">
+				<img id="testimg" />
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		function drawImgToCanvas(image, rotate) {
+			var testImg = document.getElementById('testimg')
+			var canvas = document.createElement("canvas");
+			var context = canvas.getContext('2d')
+			var img = new Image();
+			console.log(60);
+			img.setAttribute('crossOrigin', 'Anonymous')
+			img.src = image.src;
+
+			img.onload = function() {
+				canvas.width = img.height;
+				canvas.height = img.width;
+
+				context.translate(canvas.width / 2, canvas.height / 2)
+				context.rotate(rotate * Math.PI / 180)
+				context.translate(-canvas.width / 2, -canvas.height / 2)
+				context.drawImage(img, canvas.width / 2 - img.width / 2, canvas.height / 2 - img.height / 2)
+				context.translate(canvas.width / 2, canvas.height / 2)
+				context.rotate(-rotate * Math.PI / 180)
+				context.translate(-canvas.width / 2, -canvas.height / 2)
+				context.restore()
+				var base64 = canvas.toDataURL("image/jpeg", 0.9);
+				testImg.src = base64;
+				console.log('base64', base64);
+			};
+
+
+		}
+
+		function drawImg() {
+			var image = document.getElementById('img');
+			var rotate = document.getElementById('number').value * 1;
+
+			drawImgToCanvas(image, rotate);
+		}
+	</script>
+</html>
