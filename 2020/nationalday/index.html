@@ -125,6 +125,7 @@
 			// 监听文件变化
 			fileUpload.addEventListener('change', function() {
 				const img = new Image()
+				img.setAttribute('crossOrigin', 'anonymous')
 				img.src = URL.createObjectURL(this.files[0])
 				img.onload = function() {
 					drawImage(img)
@@ -135,6 +136,7 @@
 			})
 			// 默认是第一张
 			img[0].onload = function() {
+				img[0].setAttribute('crossOrigin', 'anonymous');
 				drawImage(img[0])
 				avatarIcon = img[0]
 				canvasToImg()
