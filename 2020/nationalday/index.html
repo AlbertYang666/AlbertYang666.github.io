@@ -70,14 +70,14 @@
 
 	<body>
 		<ul>
-			<li><img src="https://cdn.jsdelivr.net/gh/albertyang666/AlbertYang666.github.io@2020/2020/nationalday/imgs/avatar-1.png"></li>
-			<li><img src="https://cdn.jsdelivr.net/gh/albertyang666/AlbertYang666.github.io@2020/2020/nationalday/imgs/avatar-2.png"></li>
-			<li><img src="https://cdn.jsdelivr.net/gh/albertyang666/AlbertYang666.github.io@2020/2020/nationalday/imgs/avatar-3.png"></li>
-			<li><img src="https://cdn.jsdelivr.net/gh/albertyang666/AlbertYang666.github.io@2020/2020/nationalday/imgs/avatar-4.png"></li>
-			<li><img src="https://cdn.jsdelivr.net/gh/albertyang666/AlbertYang666.github.io@2020/2020/nationalday/imgs/avatar-5.png"></li>
-			<li><img src="https://cdn.jsdelivr.net/gh/albertyang666/AlbertYang666.github.io@2020/2020/nationalday/imgs/avatar-6.png"></li>
-			<li><img src="https://cdn.jsdelivr.net/gh/albertyang666/AlbertYang666.github.io@2020/2020/nationalday/imgs/avatar-7.png"></li>
-			<li><img src="https://cdn.jsdelivr.net/gh/albertyang666/AlbertYang666.github.io@2020/2020/nationalday/imgs/avatar-8.png"></li>
+			<li><img src="./imgs/avatar-1.png"></li>
+			<li><img src="./imgs/avatar-2.png"></li>
+			<li><img src="./imgs/avatar-3.png"></li>
+			<li><img src="./imgs/avatar-4.png"></li>
+			<li><img src="./imgs/avatar-5.png"></li>
+			<li><img src="./imgs/avatar-6.png"></li>
+			<li><img src="./imgs/avatar-7.png"></li>
+			<li><img src="./imgs/avatar-8.png"></li>
 		</ul>
 
 		<button>上传图片</button>
@@ -125,7 +125,6 @@
 			// 监听文件变化
 			fileUpload.addEventListener('change', function() {
 				const img = new Image()
-				img.setAttribute('crossOrigin', 'anonymous')
 				img.src = URL.createObjectURL(this.files[0])
 				img.onload = function() {
 					drawImage(img)
@@ -136,7 +135,6 @@
 			})
 			// 默认是第一张
 			img[0].onload = function() {
-				img[0].setAttribute('crossOrigin', 'anonymous');
 				drawImage(img[0])
 				avatarIcon = img[0]
 				canvasToImg()
