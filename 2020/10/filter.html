@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>过滤敏感词汇：公众号AlbertYang</title>
+	</head>
+	<body>
+		<textarea name="" id="message"></textarea> <button>提交</button>
+		<div></div>
+		<script>
+			var text = document.querySelector('textarea');
+			var btn = document.querySelector('button');
+			var div = document.querySelector('div');
+			btn.onclick = function() {
+				div.innerHTML = text.value.replace(/激情|gay|AV/g, '**');
+			}
+		</script>
+	</body>
+</html>
