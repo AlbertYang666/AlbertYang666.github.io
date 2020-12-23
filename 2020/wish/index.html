@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>祝福陈通新婚快乐!!!</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no" />
+	</head>
+	<style>
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			background: linear-gradient(45deg, #6fc7b5 0%, #e436d7 20%, #eae543 40%, #dc6363 60%, #ee4d74 80%, #f58c58 100%);
+			background-size: 600%;
+			background-position: 0% 100%;
+			animation: gradient 7.5s ease-in-out infinite;
+			text-align: center;
+		}
+
+		h2 {
+			background: rgba(255, 255, 255, 0.5);
+			padding: 10px;
+			border-radius: 10px;
+			color: red;
+			position: fixed;
+			top: 10px;
+			font-size: 36px;
+		}
+
+		span {
+			text-shadow: 3px 3px 3px #555;
+			font-size: 75px;
+			color: rgba(5, 5, 5, 0);
+			transition: font-size 1s, color 1s;
+		}
+
+		@keyframes gradient {
+			50% {
+				background-position: 100% 0%;
+			}
+		}
+	</style>
+	<body>
+		<h2>9428全体成员恭祝</h2>
+		<h1>陈通新婚快乐!</h1>
+		<script>
+			var minChar = 10;
+			var maxChar = 18;
+
+			var heading = document.getElementsByTagName('h1')[0];
+			var arr = heading.innerHTML.split('');
+			heading.innerHTML = null;
+
+			var c = [];
+
+			for (var i = 0; i < arr.length; i++) {
+				var elm = document.createElement('span');
+				elm.innerHTML = arr[i];
+				heading.appendChild(c[i] = elm);
+
+				c[i].addEventListener("transitionend", function(e) {
+					var el = e.srcElement;
+					if (e.propertyName === 'font-size') {
+						var oldsize = parseInt(el.style.fontSize);
+						el.style.fontSize = random(minChar, maxChar) + 'vw';
+						if (oldsize === parseInt(el.style.fontSize)) {
+							el.style.fontSize = oldsize + 1 + 'vw';
+						}
+						el.style.color = rgbR();
+						var s = random(200, 800) / 1000;
+						el.style.transition = 'font-size ' + s + 's, color 1s';
+					}
+				});
+			}
+
+			setTimeout(function() { //debouce and fire all letters.
+				for (var i = 0; i < c.length; i++) {
+					c[i].style.color = rgbR();
+					c[i].style.fontSize = random(minChar, maxChar) + 'vw';
+				}
+			}, 100);
+
+			function random(max, min) {
+				return Math.floor(Math.random() * (max - min + 1) + min);
+			}
+
+			function rgbR() {
+				return 'rgb(' + random(0, 255) + ', ' + random(0, 255) + ', ' + random(0, 255) + ')';
+			}
+		</script>
+	</body>
+</html>
